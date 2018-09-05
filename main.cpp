@@ -1,14 +1,19 @@
+#include "configuration.hpp"
 #include "messageIO.hpp"
+
+#include "strategy.hpp"
 
 int main()
 {
 	using namespace model;
 
+	StrategyPtr currentStrategy = nullptr;
 	while (true) {
 		Message msg{};
 		read(msg);
 
-		Response response {Command::Left, "left"};
-		write(response);
+		currentStrategy = g_strategyManager.getStrategy(msg);
+
+		write(currentStrategy->getResponse());
 	}
 }
