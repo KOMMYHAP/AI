@@ -129,7 +129,7 @@ struct Message
 struct Command
 {
 	enum Type {
-		Left, Right, Stop
+		Left = 0, Right, Stop, Count
 	};
 	Type value;
 };
