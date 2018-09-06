@@ -20,6 +20,8 @@
         // somewhere in code:
         An<Manager> g_manager;
         g_manager->someAction();
+    @note:
+        Macros must be use in global namespace.
 */
 template<typename T>
 class An
@@ -64,10 +66,16 @@ T& single()
     return t;
 }
 
-#define PROTO_IFACE(T) template<> void anFill(An<T> &a)
-#define DECLATE_IMPL(T) PROTO_IFACE(T);
+#define PROTO_IFACE(T) \
+    template<> void anFill(An<T> &a)
 
-#define BIND_TO_IMPL_SINGLE(Iface, Impl) PROTO_IFACE(Iface) { a = &single<Impl>(); }
-#define BIND_SELF_TO_IMPL_SINGLE(Impl) BIND_TO_IMPL_SINGLE(Impl, Impl)
+#define DECLARE_IMPL(T) \
+    PROTO_IFACE(T);
+
+#define BIND_TO_IMPL_SINGLE(Iface, Impl) \
+    PROTO_IFACE(Iface) { a = &single<Impl>(); }
+
+#define BIND_SELF_TO_IMPL_SINGLE(Impl) \
+    BIND_TO_IMPL_SINGLE(Impl, Impl)
 
 #endif //SINGLETON_HPP
