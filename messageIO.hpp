@@ -32,7 +32,7 @@ void from_json(json const &, Message &);
 void read(Message &message);
 
 
-// Write Response to stdout in json format  using to_json functions
+// Write Response to stdout in json format using to_json functions
 void write(Response const &response);
 
 } // model
