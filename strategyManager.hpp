@@ -3,9 +3,10 @@
 
 #include <memory>
 
-#include "singleton.hpp"
 #include "strategy.hpp"
 #include "configuration.hpp"
+
+#include "singleton.hpp"
 
 namespace ai {
 
@@ -23,7 +24,7 @@ public:
 	StrategyManager(StrategyManager const &) = delete;
 	StrategyManager & operator=(StrategyManager const &) = delete;
 
-	~StrategyManager();
+	~StrategyManager() = default;
 
 	StrategyPtr getStrategy(model::Message const &);
 private:
@@ -31,10 +32,8 @@ private:
 	std::unique_ptr<Impl> m_pImpl;
 };
 
-DECLARE_IMPL(StrategyManager);
-
-An<StrategyManager> g_strategyManager;
-
 } // end of namespace ai
+
+DECLARE_IMPL(ai::StrategyManager);
 
 #endif //STRATEGY_MANAGER_HPP

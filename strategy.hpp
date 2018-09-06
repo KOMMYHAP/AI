@@ -1,6 +1,8 @@
 #ifndef STRATEGY_HPP
 #define STRATEGY_HPP
 
+#include <memory>
+
 #include "configuration.hpp"
 
 namespace ai {
@@ -11,12 +13,22 @@ namespace ai {
 		strategy like random choosing command or
 		complex like recurrent strategy which
 		allows to use details of old message. */
-struct Strategy
+class Strategy
 {
+public:
 	virtual model::Response getResponse() = 0;
+	virtual ~Strategy() = default;
 };
 
-/* Forward declarations of strategy will place here */
+using StrategyPtr = std::shared_ptr<Strategy>;
+
+/* Forward declarations of strategy implementation: */
+class RandomStrategy : public Strategy
+{
+public:
+	model::Response getResponse() override;
+	~RandomStrategy() override = default;	
+};
 
 } // end of namespace ai
 
