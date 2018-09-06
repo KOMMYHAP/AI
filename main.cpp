@@ -1,19 +1,21 @@
 #include "configuration.hpp"
 #include "messageIO.hpp"
 
-#include "strategy.hpp"
+#include "strategyManager.hpp"
 
 int main()
 {
 	using namespace model;
-
-	StrategyPtr currentStrategy = nullptr;
+	using namespace ai;
+	
+	An<StrategyManager> strategyManagerPtr;
+	StrategyPtr currentStrategyPtr = nullptr;
 	while (true) {
 		Message msg{};
 		read(msg);
 
-		currentStrategy = g_strategyManager.getStrategy(msg);
+		currentStrategyPtr = strategyManagerPtr->getStrategy(msg);
 
-		write(currentStrategy->getResponse());
+		write(currentStrategyPtr->getResponse());
 	}
 }
