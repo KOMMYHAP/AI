@@ -10,27 +10,17 @@ namespace model {
 
 using json = nlohmann::json;
 
-void to_json(json &js, Command const &command)
-{
-	static constexpr auto  left_cstr = "left";
-	static constexpr auto right_cstr = "right";
-	static constexpr auto  stop_cstr = "stop";
-
-	js =
-		command.value ==  Command::Left ?  	 left_cstr :
-		command.value == Command::Right ? 	right_cstr :
-											stop_cstr  ;
-}
-
-void to_json(json &js, DebugMessage const &debug)
-{
-	js = debug.msg;
-}
-
 void to_json(json &js, Response const &response)
 {
-	js["command"] 	= response.command;
-	js["debug"] 	= response.debug;
+	static constexpr auto left_cstr  = "left";
+	static constexpr auto right_cstr = "right";
+	static constexpr auto stop_cstr  = "stop";
+
+	js["command"] 	= 
+		response.command ==  Response::Left ?  	left_cstr  :
+		response.command ==  Response::Right ? 	right_cstr :
+												stop_cstr  ;
+	js["debug"] = response.debug.msg;
 }
 
 void from_json(json const &js, Point2D &point) 
@@ -138,18 +128,10 @@ void from_json(json const &js, MessageParams &params)
 	}
 }
 
-void from_json(json const &js, MessageType &messageType) 
-{
-	string const type = js.get<string>();
-	if (type == "tick")
-		messageType.value = MessageType::Tick;
-	else
-		messageType.value = MessageType::MatchBegin;
-}
-
 void from_json(json const &js, Message &msg) 
 {
-	msg.type = js["type"].get<MessageType>(); 
+	string const type = js["type"].get<string>();
+	msg.type = type == "tick" ? Message::Tick : Message::MatchBegin;
 	msg.params = js["params"].get<MessageParams>();
 }
 

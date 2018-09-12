@@ -10,8 +10,6 @@ using json = nlohmann::json;
 
 /*	Declare required functions to_json for types which
 	will be serialized */
-void to_json(json &, Command const &);
-void to_json(json &, DebugMessage const &);
 void to_json(json &, Response const &);
 
 
@@ -24,7 +22,6 @@ void from_json(json const &, ProtoMap &);
 void from_json(json const &, ProtoCar &);
 void from_json(json const &, Car &);
 void from_json(json const &, MessageParams &);
-void from_json(json const &, MessageType &);
 void from_json(json const &, Message &);
 
 
