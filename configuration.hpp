@@ -112,36 +112,26 @@ struct MessageParams
 	f64			garbagePosition;
 };
 
-struct MessageType
+struct Message
 {
 	enum Type {
 		MatchBegin, Tick	
 	};
-	Type value;
-};
-
-struct Message
-{
-	MessageType type;
+	Type type;
 	MessageParams params;
-};
-
-struct Command
-{
-	enum Type {
-		Left = 0, Right, Stop, Count
-	};
-	Type value;
-};
-
-struct DebugMessage
-{
-	string msg;
 };
 
 struct Response
 {
+	enum Command {
+		Left = 0, Right, Stop, Count
+	};
 	Command command;
+	
+	struct DebugMessage
+	{
+		string msg;
+	};
 	DebugMessage debug;
 };
 
